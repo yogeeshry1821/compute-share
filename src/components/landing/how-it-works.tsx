@@ -1,4 +1,4 @@
-import {
+﻿import {
   DesktopIcon,
   ArrowsLeftRightIcon,
   CoinsIcon,
@@ -31,7 +31,7 @@ const steps = [
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="border-t border-border px-8 py-24">
-      <h2 className="text-2xl font-medium">How it works</h2>
+      <h2 className="text-3xl font-medium">How it works</h2>
 
       <div className="mt-12 grid gap-12 md:grid-cols-3">
         {steps.map((step) => {
@@ -39,13 +39,13 @@ export function HowItWorks() {
           return (
             <div key={step.number}>
               <div className="flex items-center gap-3">
-                <Icon size={20} weight="regular" />
-                <span className="font-mono text-sm text-muted-foreground">
+                <Icon size={22} weight="regular" />
+                <span className="font-mono text-base text-muted-foreground">
                   {step.number}
                 </span>
               </div>
-              <h3 className="mt-4 text-lg font-medium">{step.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <h3 className="mt-4 text-xl font-medium">{step.title}</h3>
+              <p className="mt-2 text-base text-muted-foreground">
                 {step.description}
               </p>
             </div>

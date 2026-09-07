@@ -6,7 +6,7 @@
 :root {
   --radius: 0.5rem;
 
-  --page: hsl(0 0% 100%);
+  --page: hsl(40 10% 98%);
 
   --background: hsl(40 20% 95.5%);
   --foreground: hsl(60 10% 8%);
@@ -32,7 +32,7 @@
   --destructive: hsl(0 65% 45%);
   --destructive-foreground: hsl(40 30% 97%);
 
-  --border: hsl(45 15% 87%);
+  --border: hsl(35 20% 78%);
   --input: hsl(45 15% 87%);
   --ring: hsl(30 60% 42%);
 }
