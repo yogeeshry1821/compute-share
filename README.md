@@ -28,10 +28,13 @@ Compute Share is a shared compute marketplace for AI training — starting with 
 ## Current State
 
 - Landing page complete (`src/app/page.tsx` + `src/components/landing/`)
-- Better Auth integrated with `/login`, `/signup`, and `/dashboard` routes
+- Better Auth configured with `nextCookies()`, `secret`, and `baseURL`
+- Functional `/login` and `/signup` pages with client-side validation, error display, and loading states
 - Dashboard shell with sidebar nav for `/dashboard/machines`, `/dashboard/jobs`, `/dashboard/profile`, `/dashboard/billing`
-- Protected routes via `src/proxy.ts`
-- Build verified with `next build --webpack`
+- Protected routes via `src/proxy.ts` with Node.js runtime
+- PostgreSQL database `computeshare` created
+- Better Auth tables migrated: `user`, `session`, `account`, `verification`
+- Build and lint verified with `next build --webpack` and `eslint`
 
 ## Getting Started
 
@@ -66,11 +69,12 @@ Required variables:
 
 ### Database Setup
 
-1. Create a PostgreSQL database (e.g. `computeshare`)
-2. Run the Better Auth schema migration:
+1. Ensure PostgreSQL is running
+2. Create the `computeshare` database
+3. Run the Better Auth schema migration:
    ```bash
-   npx auth@latest generate
-   npx auth@latest migrate
+   npx auth@latest generate -y
+   npx auth@latest migrate -y
    ```
 
 ### Development
@@ -85,8 +89,8 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Build Order
 
-1. **Step 1 — Auth** (current): Better Auth, login/signup, protected routes
-2. **Step 2 — Dashboard Shell**: sidebar nav, stub pages for machines/jobs/profile/billing
+1. **Step 1 — Auth** (complete): Better Auth config, login/signup with validation, protected routes, database migrated
+2. **Step 2 — Dashboard Shell** (complete): sidebar nav, stub pages for machines/jobs/profile/billing
 3. **Step 3 — Database + CRUD**: Prisma schema, server actions, real data in dashboard
 4. **Step 4+**: Provider agent, scheduler, metering/billing
 
@@ -109,34 +113,36 @@ After Step 3, we pause to validate shell usability before building the provider 
 ```
 src/
   app/
-    layout.tsx          # Root layout with AuthProvider
-    page.tsx            # Landing page composition layer
-    api/auth/[...all]/route.ts  # Better Auth API route
-    login/page.tsx      # Login page
-    signup/page.tsx     # Signup page
+    layout.tsx                 # Root layout with AuthProvider
+    page.tsx                   # Landing page composition layer
+    api/auth/[...all]/route.ts # Better Auth API route
+    login/page.tsx             # Login page with validation and loading states
+    signup/page.tsx            # Signup page with validation and loading states
     dashboard/
-      layout.tsx        # Dashboard shell layout
-      page.tsx          # Redirects to /dashboard/machines
-      machines/page.tsx
-      jobs/page.tsx
-      profile/page.tsx
-      billing/page.tsx
+      layout.tsx               # Dashboard shell layout
+      page.tsx                 # Redirects to /dashboard/machines
+      machines/page.tsx        # Stub page
+      jobs/page.tsx            # Stub page
+      profile/page.tsx         # Stub page
+      billing/page.tsx         # Stub page
   components/
     auth/
-      auth-provider.tsx # Client-side auth context
+      auth-provider.tsx        # Client-side auth context
     dashboard/
-      dashboard-shell.tsx
+      dashboard-shell.tsx      # Sidebar navigation shell
     landing/
-      nav.tsx
+      nav.tsx                  # Auth-aware navigation
       hero.tsx
       how-it-works.tsx
       audiences.tsx
       pricing.tsx
       footer.tsx
-    ui/                 # shadcn/ui components
+    ui/                        # shadcn/ui components (Base UI)
   lib/
-    auth.ts             # Better Auth server instance
-    auth-client.ts      # Better Auth React client
+    auth.ts                    # Better Auth server instance with nextCookies
+    auth-client.ts             # Better Auth React client
+    db/
+proxy.ts                       # Next.js 16 proxy for protected routes (Node.js runtime)
 ```
 
 ## Scripts
@@ -146,6 +152,8 @@ npm run dev      # Start dev server with webpack
 npm run build    # Production build with webpack
 npm run start    # Start production server
 npm run lint     # Run ESLint
+npx auth@latest generate -y   # Generate Better Auth schema
+npx auth@latest migrate -y    # Run Better Auth migrations
 ```
 
 ## Contributing
