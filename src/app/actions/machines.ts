@@ -1,10 +1,20 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db/prisma";
 
+async function getSession() {
+  const cookieStore = await cookies();
+  return auth.api.getSession({
+    headers: new Headers({
+      cookie: cookieStore.toString(),
+    }),
+  });
+}
+
 export async function getMachines() {
-  const session = await auth.api.getSession({ headers: {} });
+  const session = await getSession();
   if (!session?.user) {
     return { error: "Unauthorized" };
   }
@@ -18,7 +28,7 @@ export async function getMachines() {
 }
 
 export async function createMachine(formData: FormData) {
-  const session = await auth.api.getSession({ headers: {} });
+  const session = await getSession();
   if (!session?.user) {
     return { error: "Unauthorized" };
   }
@@ -53,7 +63,7 @@ export async function createMachine(formData: FormData) {
 }
 
 export async function deleteMachine(id: string) {
-  const session = await auth.api.getSession({ headers: {} });
+  const session = await getSession();
   if (!session?.user) {
     return { error: "Unauthorized" };
   }
@@ -66,7 +76,7 @@ export async function deleteMachine(id: string) {
 }
 
 export async function updateMachineStatus(id: string, status: string) {
-  const session = await auth.api.getSession({ headers: {} });
+  const session = await getSession();
   if (!session?.user) {
     return { error: "Unauthorized" };
   }

@@ -82,32 +82,34 @@ export default function MachinesPage() {
   };
 
   return (
-    <div className="py-12">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Machines</h1>
-          <p className="mt-2 text-muted-foreground">
-            Manage your compute machines and their status.
-          </p>
-        </div>
+    <div className="px-6 py-8">
+      <div className="pb-6 mb-6 border-b border-border">
+        <h1 className="text-3xl font-bold tracking-tight">Machines</h1>
+        <p className="mt-2 text-muted-foreground">
+          Manage your compute machines and their status.
+        </p>
+      </div>
+      <div className="flex justify-end pb-6 mb-6 border-b border-border">
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button size="sm">
-              <Plus className="mr-2 size-4" />
-              Add Machine
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
+          <SheetTrigger
+            render={
+              <Button size="sm">
+                <Plus className="mr-2 size-4" />
+                Add Machine
+              </Button>
+            }
+          />
+          <SheetContent className="px-6 py-6">
             <SheetHeader>
               <SheetTitle>Add Machine</SheetTitle>
             </SheetHeader>
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <form onSubmit={handleSubmit} className="mt-6 space-y-6">
               <div>
                 <label className="block text-sm font-medium">Name</label>
                 <input
                   name="name"
                   required
-                  className="mt-1 w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+                  className="mt-2 w-full rounded-none border border-input bg-background px-4 py-3 text-sm"
                 />
               </div>
               <div>
@@ -115,7 +117,7 @@ export default function MachinesPage() {
                 <input
                   name="gpuModel"
                   required
-                  className="mt-1 w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+                  className="mt-2 w-full rounded-none border border-input bg-background px-4 py-3 text-sm"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -126,7 +128,7 @@ export default function MachinesPage() {
                     type="number"
                     required
                     min={1}
-                    className="mt-1 w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+                    className="mt-2 w-full rounded-none border border-input bg-background px-4 py-3 text-sm"
                   />
                 </div>
                 <div>
@@ -136,7 +138,7 @@ export default function MachinesPage() {
                     type="number"
                     required
                     min={1}
-                    className="mt-1 w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+                    className="mt-2 w-full rounded-none border border-input bg-background px-4 py-3 text-sm"
                   />
                 </div>
               </div>
@@ -148,7 +150,7 @@ export default function MachinesPage() {
                     type="number"
                     required
                     min={1}
-                    className="mt-1 w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+                    className="mt-2 w-full rounded-none border border-input bg-background px-4 py-3 text-sm"
                   />
                 </div>
                 <div>
@@ -159,7 +161,7 @@ export default function MachinesPage() {
                     step="0.01"
                     required
                     min={0}
-                    className="mt-1 w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+                    className="mt-2 w-full rounded-none border border-input bg-background px-4 py-3 text-sm"
                   />
                 </div>
               </div>
@@ -167,7 +169,7 @@ export default function MachinesPage() {
                 <label className="block text-sm font-medium">Location</label>
                 <input
                   name="location"
-                  className="mt-1 w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+                  className="mt-2 w-full rounded-none border border-input bg-background px-4 py-3 text-sm"
                 />
               </div>
               <SheetFooter>
