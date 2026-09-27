@@ -20,8 +20,8 @@ core loop before building a real marketplace/scheduler.
   `@phosphor-icons/react`.
 - Typography: Fustat (primary sans, via `next/font/google`), DM Mono
   (accent — specs, status, labels, IDs)
-- Planned, not yet implemented: Postgres + Prisma, Clerk/NextAuth
-  (undecided), Vercel hosting
+- **Implemented:** PostgreSQL + Prisma (schema has `user` and `machine` tables)
+- **Planned, not yet implemented:** Provider agent, scheduler, metering/billing, Vercel hosting
 
 ## Design system
 - Layout: content centered in a 65%-width column (full-bleed below `lg`
@@ -38,10 +38,13 @@ core loop before building a real marketplace/scheduler.
 - Accent color: muted copper/amber (`primary: hsl(30 60% 42%)`), not a
   bright/neon accent
 
-## Current state — landing page complete
-`src/components/landing/`: nav.tsx, hero.tsx, how-it-works.tsx,
-audiences.tsx, pricing.tsx, footer.tsx — composed in `src/app/page.tsx`.
-Nav includes a responsive mobile sheet menu (hamburger -> slide-in panel).
+## Current state
+- Landing page complete (`src/components/landing/`): nav.tsx, hero.tsx, how-it-works.tsx, audiences.tsx, pricing.tsx, footer.tsx — composed in `src/app/page.tsx`. Nav includes a responsive mobile sheet menu (hamburger -> slide-in panel).
+- Auth complete: Better Auth with `nextCookies()`, email/password sign-up and sign-in with client-side validation, error display, and loading states. Protected routes via `src/proxy.ts` (Node.js runtime).
+- Dashboard shell complete: sidebar nav in `src/components/dashboard/dashboard-shell.tsx` with auth-aware user info and sign-out. Routes: `/dashboard/machines`, `/dashboard/jobs`, `/dashboard/profile`, `/dashboard/billing`.
+- `/dashboard/machines` fully functional with Prisma + server actions (`src/app/actions/machines.ts`): create, delete, and online/offline status toggle.
+- `/dashboard/jobs`, `/dashboard/profile`, `/dashboard/billing` are stub placeholders awaiting Step 3+ work.
+- Database: PostgreSQL with Prisma ORM. Schema has `user` and `machine` tables. Better Auth tables (`user`, `session`, `account`, `verification`) migrated.
 
 ## Known gotchas (read before touching these areas)
 
@@ -78,13 +81,11 @@ Nav includes a responsive mobile sheet menu (hamburger -> slide-in panel).
    keep even while running webpack.
 
 ## Not yet started
-- Auth (`/login`, `/signup`)
-- Dashboard shell (`/dashboard`, `/dashboard/machines`, `/dashboard/jobs`,
-  `/dashboard/profile`, `/dashboard/billing`)
-- CRUD for machines (provider) and jobs (renter) — planned as
-  stubbed/mock-status records before any real scheduler/agent exists
-- Postgres/Prisma setup, real job execution logic, provider agent,
-  billing/metering — all deferred per "prove the shell first" build order
+- Jobs CRUD (server actions and UI) — planned after machines CRUD is validated
+- Provider agent (daemon that runs on provider hardware, reports status/heartbeat)
+- Scheduler / marketplace logic (matching renters to providers)
+- Metering / billing (usage tracking, invoicing, payments)
+- Real job execution logic (container/VM provisioning, GPU allocation)
 
 ## Working conventions
 - Build one piece at a time, verify working before moving to the next

@@ -15,7 +15,7 @@ Compute Share is a shared compute marketplace for AI training — starting with 
 - **Typography:** Fustat (primary sans), DM Mono (accent)
 - **Auth:** Better Auth (email/password)
 - **Database:** PostgreSQL
-- **ORM:** Prisma (planned for Step 3)
+- **ORM:** Prisma (implemented with `user` and `machine` tables)
 - **Hosting:** Vercel (planned)
 
 ## Design System
@@ -32,8 +32,12 @@ Compute Share is a shared compute marketplace for AI training — starting with 
 - Functional `/login` and `/signup` pages with client-side validation, error display, and loading states
 - Dashboard shell with sidebar nav for `/dashboard/machines`, `/dashboard/jobs`, `/dashboard/profile`, `/dashboard/billing`
 - Protected routes via `src/proxy.ts` with Node.js runtime
-- PostgreSQL database `computeshare` created
+- PostgreSQL database `computeshare` with Prisma ORM configured
 - Better Auth tables migrated: `user`, `session`, `account`, `verification`
+- Prisma schema pushed with `user` and `machine` tables
+- Server actions for machines CRUD implemented (`src/app/actions/machines.ts`)
+- `/dashboard/machines` page functional: create, delete, and online/offline status toggle
+- `/dashboard/jobs`, `/dashboard/profile`, `/dashboard/billing` are stub placeholders
 - Build and lint verified with `next build --webpack` and `eslint`
 
 ## Getting Started
@@ -91,10 +95,10 @@ Open [http://localhost:3000](http://localhost:3000).
 
 1. **Step 1 — Auth** (complete): Better Auth config, login/signup with validation, protected routes, database migrated
 2. **Step 2 — Dashboard Shell** (complete): sidebar nav, stub pages for machines/jobs/profile/billing
-3. **Step 3 — Database + CRUD**: Prisma schema, server actions, real data in dashboard
+3. **Step 3 — Database + CRUD** (partial): Prisma schema pushed, machines CRUD with server actions and full UI, jobs CRUD not started
 4. **Step 4+**: Provider agent, scheduler, metering/billing
 
-After Step 3, we pause to validate shell usability before building the provider agent.
+After Step 3 is fully complete (machines + jobs CRUD), validate shell usability before building the provider agent.
 
 ## Known Gotchas
 
@@ -121,10 +125,12 @@ src/
     dashboard/
       layout.tsx               # Dashboard shell layout
       page.tsx                 # Redirects to /dashboard/machines
-      machines/page.tsx        # Stub page
+      machines/page.tsx        # Full CRUD UI for machines
       jobs/page.tsx            # Stub page
       profile/page.tsx         # Stub page
       billing/page.tsx         # Stub page
+      actions/
+        machines.ts            # Server actions for machines CRUD
   components/
     auth/
       auth-provider.tsx        # Client-side auth context
